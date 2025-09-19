@@ -1,0 +1,133 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: migratedbs.k8s-dbmigrator.k8sdbsync
+spec:
+  group: k8s-dbmigrator.k8sdbsync
+  names:
+    kind: Migratedb
+    listKind: MigratedbList
+    plural: migratedbs
+    singular: migratedb
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Migratedb is the Schema for the migratedbs API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              destinationDb:
+                items:
+                  description: DestinationDatabase represents the destination database
+                    configuration
+                  properties:
+                    dbCredentialsSecret:
+                      description: |-
+                        SecretReference represents a Secret Reference. It has enough information to retrieve secret
+                        in any namespace
+                      properties:
+                        name:
+                          description: name is unique within a namespace to reference
+                            a secret resource.
+                          type: string
+                        namespace:
+                          description: namespace defines the space within which the
+                            secret name must be unique.
+                          type: string
+                      type: object
+                      x-kubernetes-map-type: atomic
+                    dbName:
+                      type: string
+                    dbPort:
+                      type: integer
+                    dbUrl:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - dbCredentialsSecret
+                  - dbName
+                  - dbPort
+                  - dbUrl
+                  - type
+                  type: object
+                type: array
+              excludeTable:
+                items:
+                  type: string
+                type: array
+              includeTable:
+                items:
+                  type: string
+                type: array
+              sourceDb:
+                description: |-
+                  Foo is an example field of Migratedb. Edit migratedb_types.go to remove/update
+                  Foo string `json:"foo,omitempty"`
+                properties:
+                  dbCredentialsSecret:
+                    description: |-
+                      SecretReference represents a Secret Reference. It has enough information to retrieve secret
+                      in any namespace
+                    properties:
+                      name:
+                        description: name is unique within a namespace to reference
+                          a secret resource.
+                        type: string
+                      namespace:
+                        description: namespace defines the space within which the
+                          secret name must be unique.
+                        type: string
+                    type: object
+                    x-kubernetes-map-type: atomic
+                  dbName:
+                    type: string
+                  dbPort:
+                    type: integer
+                  dbUrl:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - dbCredentialsSecret
+                - dbName
+                - dbPort
+                - dbUrl
+                - type
+                type: object
+            required:
+            - destinationDb
+            - excludeTable
+            - includeTable
+            - sourceDb
+            type: object
+          status:
+            description: MigratedbStatus defines the observed state of Migratedb.
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

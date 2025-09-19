@@ -1,0 +1,9 @@
+apiVersion: k8s-dbmigrator.k8sdbsync/v1alpha1
+kind: Migratedb
+metadata:
+  labels:
+    app.kubernetes.io/name: dbmigrator-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: migratedb-sample
+spec:
+  # TODO(user): Add fields here

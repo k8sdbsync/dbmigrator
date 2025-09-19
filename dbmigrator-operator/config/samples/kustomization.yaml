@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- k8s-dbmigrator_v1alpha1_migratedb.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples
